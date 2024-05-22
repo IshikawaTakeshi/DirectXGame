@@ -11,7 +11,6 @@
 #include <dxgidebug.h>
 #pragma comment(lib,"dxguid.lib")
 
-
 struct D3DResourceLeakChecker {
 	~D3DResourceLeakChecker() {
 		Microsoft::WRL::ComPtr<IDXGIDebug1> debug;
