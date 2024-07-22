@@ -1,3 +1,1 @@
-#include "../Include/DirectionalLight.h"
-
-
+//#include "DirectionalLight.h"
