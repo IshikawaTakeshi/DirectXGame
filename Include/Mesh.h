@@ -40,7 +40,7 @@ public:
 	/// <summary>
 	/// 頂点バッファビューの取得
 	/// </summary>
-	D3D12_VERTEX_BUFFER_VIEW GetVertexBufferView() const { return vertexBufferView_; }
+	const D3D12_VERTEX_BUFFER_VIEW GetVertexBufferView() { return vertexBufferView_; }
 
 
 	//================================= IndexBufferResource ==================================//
@@ -71,18 +71,18 @@ public:
 
 private:
 
-	//マテリアル
-	Material* material_;
-
+	
 	//頂点バッファリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;
-	
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
 
 	//IndexBufferView用のリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource_;
 	D3D12_INDEX_BUFFER_VIEW indexBufferView_{};
+
+	//マテリアル
+	Material* material_ = nullptr;
 
 };
 

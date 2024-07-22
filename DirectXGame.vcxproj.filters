@@ -161,9 +161,6 @@
     <ClInclude Include="Sphere\Sphere.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MyMath\TransformMatrix.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MyMath\MyMath.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
