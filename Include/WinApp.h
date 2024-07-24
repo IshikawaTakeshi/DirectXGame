@@ -48,7 +48,7 @@ public:
 	/// <returns>終了かどうか</returns>
 	bool ProcessMessage();
 
-public:
+public: //Getter
 
 	/// <summary>
 	/// ウィンドウハンドルの取得
@@ -60,8 +60,12 @@ public:
 	/// ウィンドウクラスの取得
 	/// </summary>
 	/// <returns></returns>
-	const WNDCLASS& GetWndClass() const { return wc_; }
+	const HINSTANCE& GetHInstance() const { return wc_.hInstance; }
 
+	/// <summary>
+	/// ウィンドウレクトの取得
+	/// </summary>
+	/// <returns></returns>
 	const RECT& GetWindowRect() const { return wrc_; }
 
 private:

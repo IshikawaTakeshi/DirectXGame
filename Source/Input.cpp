@@ -8,7 +8,7 @@ void Input::Initialize(WinApp* winApp) {
 	HRESULT result;
 
 	//DirectInputの初期化
-	result = DirectInput8Create(winApp->GetWndClass().hInstance,
+	result = DirectInput8Create(winApp->GetHInstance(),
 		DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput_, nullptr);
 	assert(SUCCEEDED(result));
 
