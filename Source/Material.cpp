@@ -32,12 +32,12 @@ void Material::InitializeTexture(uint32_t index, DirectXCommon* dxCommon, bool e
 	};
 }
 
-void Material::UpdateMaterial() {
+void Material::UpdateImGui() {
 
 
 #ifdef _DEBUG
 	//ImGuiの更新
-	ImGui::Begin("Material");
+	ImGui::Text("Material");
 	ImGui::DragFloat2("UVTranslate", &uvTransform_.translate.x, 0.01f, -10.0f, 10.0f);
 	ImGui::DragFloat2("UVScale", &uvTransform_.scale.x, 0.01f, -10.0f, 10.0f);
 	ImGui::SliderAngle("UVRotate", &uvTransform_.rotate.z);
@@ -45,7 +45,6 @@ void Material::UpdateMaterial() {
 	uvTransformMatrix = MatrixMath::Multiply(uvTransformMatrix, MatrixMath::MakeRotateZMatrix(uvTransform_.rotate.z));
 	uvTransformMatrix = MatrixMath::Multiply(uvTransformMatrix, MatrixMath::MakeTranslateMatrix(uvTransform_.translate));
 	materialData_->uvTransform = uvTransformMatrix;
-	ImGui::End();
 
 #endif // DEBUG
 

@@ -41,7 +41,7 @@ void DirectXCommon::Initialize(WinApp* winApp) {
 	
 
 	//ディスクリプタヒープ生成
-	CreateDescriptorHeap();
+	GenerateDescriptorHeaps();
 	// レンダーターゲット生成
 	CreateFinalRenderTargets();
 	// フェンス生成
@@ -344,7 +344,7 @@ void DirectXCommon::CreateSwapChain() {
 	assert(SUCCEEDED(result));
 }
 
-void DirectXCommon::CreateDescriptorHeap() {
+void DirectXCommon::GenerateDescriptorHeaps() {
 
 	//ディスクリプタヒープのサイズを取得
 	descriptorSizeSRV_ = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);

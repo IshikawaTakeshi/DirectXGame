@@ -12,6 +12,10 @@ class DirectXCommon;
 class Material {
 public:
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///			public関数
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	Material() = default;
 	~Material();
 
@@ -21,43 +25,59 @@ public:
 	void InitializeTexture(uint32_t index, DirectXCommon* dxCommon, bool enableLight, const std::string& filePath);
 
 	/// <summary>
-	/// 更新処理
+	/// ImGuiによる更新処理
 	/// </summary>
-	void UpdateMaterial();
+	void UpdateImGui();
 
 	/// <summary>
 	/// マテリアルリソース初期化
 	/// </summary>
 	void InitializeMaterialResource(Microsoft::WRL::ComPtr<ID3D12Device> device, bool enableLight);
 
-public: //ゲッター
+public: 
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///			getter
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/// <summary>
 	/// マテリアルリソースの取得
 	/// </summary>
 	ID3D12Resource* GetMaterialResource() { return materialResource_.Get(); }
 
+	/// <summary>
+	/// テクスチャの取得
+	/// </summary>
+	/// <returns></returns>
 	Texture* GetTexture() { return texture_; }
 
-public: //セッター
+public: 
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///			setter
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/// <summary>
-	///uvTransformのセッター
+	///uvTransformの設定
 	/// </summary>
 	void SetUvTransform(const Transform& uvTransform) { uvTransform_ = uvTransform; }
 
 	/// <summary>
-	/// マテリアルデータのセッター
+	/// マテリアルデータの設定
 	/// </summary>
 	void SetMaterialData(MaterialData* materialData) { materialData_ = materialData; }
 
 	/// <summary>
-	/// テクスチャのセッター
+	/// テクスチャの設定
 	/// </summary>
 	void SetTexture(Texture* texture) { texture_ = texture; }
 
 
 private:
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///			privateメンバ変数
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//テクスチャ
 	Texture* texture_;

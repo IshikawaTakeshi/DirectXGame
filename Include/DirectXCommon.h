@@ -137,18 +137,26 @@ private:
 	ComPtr<IDXGIAdapter4> useAdapter_ = nullptr;
 	//D3D12Deviceの生成
 	ComPtr<ID3D12Device> device_ = nullptr;
+
 	//コマンドキューの生成
 	ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
 	//コマンドアロケータの作成
 	ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;
 	//コマンドリストの生成
 	ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr;
+
 	//スワップチェーンの生成
 	ComPtr<IDXGISwapChain4> swapChain_ = nullptr;
+	//スワップチェーンの設定デスク
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
+	//スワップチェーンのバックバッファ
 	std::array<ComPtr<ID3D12Resource>,2> swapChainResources_;
 
-	//ディスクリプタヒープの生成
+	//ディスクリプタサイズ
+	uint32_t descriptorSizeSRV_;
+	uint32_t descriptorSizeRTV_;
+	uint32_t descriptorSizeDSV_;
+	//ディスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> rtvHeap_ = nullptr;
 	ComPtr<ID3D12DescriptorHeap> srvHeap_ = nullptr;
 	ComPtr<ID3D12DescriptorHeap> dsvHeap_ = nullptr;
@@ -165,9 +173,6 @@ private:
 	// TransitionBarrierの設定
 	D3D12_RESOURCE_BARRIER barrier_{};
 
-	uint32_t descriptorSizeSRV_;
-	uint32_t descriptorSizeRTV_;
-	uint32_t descriptorSizeDSV_;
 
 	// ビューポート
 	D3D12_VIEWPORT viewport_{};
@@ -208,7 +213,7 @@ private:
 	/// <summary>
 	/// 
 	/// </summary>
-	void CreateDescriptorHeap();
+	void GenerateDescriptorHeaps();
 
 	/// <summary>
 	/// レンダーターゲットのクリア
