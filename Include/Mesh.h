@@ -16,12 +16,12 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void InitializeMesh(uint32_t index, DirectXCommon* dxCommon, bool enableLight, const std::string& filePath);
+	void InitializeMesh(uint32_t index, DirectXCommon* dxCommon, uint32_t enableLight, const std::string& filePath);
 
 	/// <summary>
-	/// 更新処理
+	/// ImGuiを利用した更新処理
 	/// </summary>
-	void Update();
+	void UpdateImGui();
 
 	//================================= VertexBufferResource ==================================//
 

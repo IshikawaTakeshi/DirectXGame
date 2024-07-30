@@ -15,7 +15,7 @@
 
 Material::~Material() {}
 
-void Material::InitializeTexture(uint32_t index, DirectXCommon* dxCommon, bool enableLight, const std::string& filePath) {
+void Material::InitializeTexture(uint32_t index, DirectXCommon* dxCommon, uint32_t enableLight, const std::string& filePath) {
 
 	//マテリアルリソース初期化
 	InitializeMaterialResource(dxCommon->GetDevice(), enableLight);
@@ -45,12 +45,14 @@ void Material::UpdateImGui() {
 	uvTransformMatrix = MatrixMath::Multiply(uvTransformMatrix, MatrixMath::MakeRotateZMatrix(uvTransform_.rotate.z));
 	uvTransformMatrix = MatrixMath::Multiply(uvTransformMatrix, MatrixMath::MakeTranslateMatrix(uvTransform_.translate));
 	materialData_->uvTransform = uvTransformMatrix;
+	ImGui::ColorEdit4("Color", &materialData_->color.x);
+
 
 #endif // DEBUG
 
 }
 
-void Material::InitializeMaterialResource(Microsoft::WRL::ComPtr<ID3D12Device> device, bool enableLight) {
+void Material::InitializeMaterialResource(Microsoft::WRL::ComPtr<ID3D12Device> device, uint32_t enableLight) {
 
 	//マテリアル用リソース作成
 	materialResource_ = DirectXCommon::CreateBufferResource(device.Get(), sizeof(MaterialData));

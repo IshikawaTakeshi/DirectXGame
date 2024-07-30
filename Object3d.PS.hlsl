@@ -28,22 +28,26 @@ struct PixelShaderOutPut {
 PixelShaderOutPut main(VertexShaderOutput input) {
 	PixelShaderOutPut output;
 
-	float4 transformedUV = mul(float4(input.texcoord,0.0f,1.0f), gMaterial.uvTransform);
+	float4 transformedUV = mul(float4(input.texcoord, 0.0f, 1.0f), gMaterial.uvTransform);
 	float4 textureColor = gTexture.Sample(gSampler, transformedUV.xy);
 
 	//Lightingの計算
-	if (gMaterial.enableLighting != 0) { //Lightingする場合
+	if ( gMaterial.enableLighting != 0 ) { //Lightingする場合
 		
-			//HalfLambert
-		float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction); //法線とライト方向の内積
-		float cos = pow(NdotL * 0.5 + 0.5f, 2.0f);
-		output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
-	
-		//	//ランバート反射
-		//	float cos = saturate(dot(normalize(input.normal), -gDirectionalLight.direction));
-		//	output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
-
-	} else { //Lightingしない場合。前回まで同じ計算
+		//HalfLambert
+		if ( gMaterial.enableLighting == 1 ) {
+			float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction); //法線とライト方向の内積
+			float cos = pow(NdotL * 0.5 + 0.5f, 2.0f);
+			output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
+		}
+		//Phong
+		else if ( gMaterial.enableLighting == 2 ) {
+			//ランバート反射
+			float cos = saturate(dot(normalize(input.normal), -gDirectionalLight.direction));
+			output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
+		}
+	}
+	else { //Lightingしない場合。前回まで同じ計算
 		output.color = gMaterial.color * textureColor;
 	}
 	

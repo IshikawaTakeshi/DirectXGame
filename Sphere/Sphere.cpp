@@ -13,16 +13,16 @@
 #pragma endregion
 
 Sphere::~Sphere() {
-	
+
 	directionalLightResource_.Reset();
 	wvpResource_.Reset();
 }
 
-void Sphere::Initialize(DirectXCommon* dxCommon, Matrix4x4 cameraView, bool enableLight, const std::string& textureFilePath) {
+void Sphere::Initialize(DirectXCommon* dxCommon, Matrix4x4 cameraView, uint32_t enableLight, const std::string& textureFilePath) {
 
 	//メッシュ初期化
 	mesh_ = new Mesh();
-	mesh_->InitializeMesh(1,dxCommon,enableLight,textureFilePath);
+	mesh_->InitializeMesh(1, dxCommon, enableLight, textureFilePath);
 
 	//======================= VertexResource ===========================//
 
@@ -81,6 +81,11 @@ void Sphere::Update() {
 	transformMatrixData_->WVP = worldViewProjectionMatrix_;
 	transformMatrixData_->World = worldMatrix_;
 
+	UpdateImGui();
+
+}
+
+void Sphere::UpdateImGui() {
 
 #ifdef _DEBUG
 	ImGui::Begin("Window::Sphere");
@@ -88,6 +93,8 @@ void Sphere::Update() {
 	ImGui::DragFloat3("SphereRotate", &transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("SphereTranslate", &transform_.translate.x, 0.01f);
 	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
+	ImGuiComboUI();
+
 	ImGui::ColorEdit4("LightColor", &directionalLightData_->color_.x);
 	ImGui::SliderFloat3("LightDirection", &directionalLightData_->direction_.x, -1.0f, 1.0f);
 	ImGui::SliderFloat("LightIntensity", &directionalLightData_->intensity_, 0.0f, 1.0f);
@@ -97,6 +104,38 @@ void Sphere::Update() {
 
 
 #endif // _DEBUG
+}
+
+bool Sphere::ImGuiComboUI() {
+
+
+	std::vector<std::string> items = { "none","HarfLambert","Lambert" };
+	uint32_t itemCurrentIdx = 0;
+	std::string& currentItem = items[itemCurrentIdx];
+	bool changed = false;
+
+	if (ImGui::BeginCombo("Lighting", currentItem.c_str())) {
+		for (int n = 0; n < items.size(); n++) {
+			const bool is_selected = (currentItem == items[n]);
+			if (ImGui::Selectable(items[n].c_str(), is_selected)) {
+				itemCurrentIdx = n;
+				
+				mesh_->GetMaterial()->SetEnableLight(itemCurrentIdx);
+				changed = true;
+			}
+			// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+			if (is_selected) {
+
+				ImGui::SetItemDefaultFocus();
+			}
+
+		}
+
+		currentItem = items[itemCurrentIdx];
+		ImGui::EndCombo();
+	}
+
+	return changed;
 }
 
 void Sphere::InitializeDirectionalLightData(DirectXCommon* dxCommon) {

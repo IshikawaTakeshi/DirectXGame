@@ -7,6 +7,7 @@
 #include "../Include/Mesh.h"
 #include <stdint.h>
 #include <string>
+#include <vector>
 #include <d3d12.h>
 #include <wrl.h>
 
@@ -19,12 +20,16 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon, Matrix4x4 cameraView, bool enableLight, const std::string& textureFilePath);
+	void Initialize(DirectXCommon* dxCommon, Matrix4x4 cameraView, uint32_t enableLight, const std::string& textureFilePath);
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update();
+
+	void UpdateImGui();
+
+	bool ImGuiComboUI();
 
 	/// <summary>
 	/// directionalLightData初期化
