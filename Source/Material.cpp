@@ -37,7 +37,7 @@ void Material::UpdateImGui() {
 
 #ifdef _DEBUG
 	//ImGuiの更新
-	ImGui::Text("Material");
+	ImGui::Text("Material:uvTransform");
 	ImGui::DragFloat2("UVTranslate", &uvTransform_.translate.x, 0.01f, -10.0f, 10.0f);
 	ImGui::DragFloat2("UVScale", &uvTransform_.scale.x, 0.01f, -10.0f, 10.0f);
 	ImGui::SliderAngle("UVRotate", &uvTransform_.rotate.z);

@@ -6,6 +6,7 @@
 #include "Include/Logger.h"
 #include "Include/DirectXCommon.h"
 #include "Include/Input.h"
+#include "Audio/Audio.h"
 
 #include "MyMath/Transform.h"
 #include "MyMath/MatrixMath.h"
@@ -74,6 +75,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//入力初期化
 	Input* input = Input::GetInstance();
 	input->Initialize(winApp);
+	//オーディオ
+	Audio* audio = Audio::GetInstance();
+	audio->Initialize();
+	
+	//サウンドデータ
+	Audio::SoundData soundData1;
+	soundData1 = audio->SoundLoadWave("Resources/Alarm01.wav");
+
 
 	//テクスチャ初期化
 	Texture* texture1 = new Texture();
@@ -91,9 +100,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	);
 
 	//モデル
-	Model* model = new Model();
-	model->Initialize(directXCommon, cameraMatrix, "Resources", "obj_mtl_blend", "axis.obj");
-	//model->SetTextureFilePath("./Resources/uvChecker.png");
+	Model* model1 = new Model();
+	model1->Initialize(directXCommon, cameraMatrix, "Resources", "obj_mtl_blend", "axis.obj");
+	
+	Model* model2 = new Model();
+	model2->Initialize(directXCommon, cameraMatrix, "Resources", "obj_mtl_blend", "plane.obj");
+
+	Model* model3 = new Model();
+	model3->Initialize(directXCommon, cameraMatrix, "Resources", "obj_mtl_blend", "bunny.obj");
+
+	Model* model4 = new Model();
+	model4->Initialize(directXCommon, cameraMatrix, "Resources", "obj_mtl_blend", "teapot.obj");
 
 	//球
 	Sphere* sphere = new Sphere();
@@ -103,6 +120,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Sprite* sprite = new Sprite();
 	sprite->Initialize(directXCommon,true, "./Resources/uvChecker.png");
 
+	//モデル描画のフラグ
+	bool drawModelSwitch1 = false;
+	bool drawModelSwitch2 = false;
+	bool drawModelSwitch3 = false;
+	bool drawModelSwitch4 = false;
+	bool isDrawSphere = true;
+	bool isDrawSprite = true;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//										メインループ
@@ -134,17 +158,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//入力更新
 		input->Update();
 
+		//オーディオ再生
+		if (input->TriggerKey(DIK_A)) {
+			audio->SoundPlayWave(audio->GetXAudio2(), soundData1);
+		}
 
 		//モデルの更新処理
-		model->Update();
+		model1->Update();
+		model2->Update();
+		
+		model3->Update();
+		model4->Update();
 
 		//球
 		sphere->Update();
 
 
-
 		//スプライト
 		sprite->Update();
+
+		ImGui::Begin("DrawSwitch");
+		ImGui::Checkbox("Model:axis", &drawModelSwitch1);
+		ImGui::Checkbox("Model:plane", &drawModelSwitch2);
+		ImGui::Checkbox("Model:bunny", &drawModelSwitch3);
+		ImGui::Checkbox("Model:teapot", &drawModelSwitch4);
+		ImGui::Checkbox("Sphere", &isDrawSphere);
+		ImGui::Checkbox("Sprite", &isDrawSprite);
+		ImGui::Text("Akey : SoundPlay");
+		ImGui::End();
 
 
 		//========================== 描画処理　==========================//
@@ -161,9 +202,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//モデルのテクスチャを変更
 			sphere->SetTexture(texture1);
 		}
-		model->DrawCall(directXCommon);
-		sphere->DrawCall(directXCommon);
-		sprite->DrawCall(directXCommon);
+
+		if (drawModelSwitch1 == true) {
+			model1->DrawCall(directXCommon);
+		}
+		if (drawModelSwitch2 == true) {
+			model2->DrawCall(directXCommon);
+		}
+		if (drawModelSwitch3 == true) {
+			model3->DrawCall(directXCommon);
+		}
+		if (drawModelSwitch4 == true) {
+			model4->DrawCall(directXCommon);
+		}
+
+		if (isDrawSphere == true) {
+			sphere->DrawCall(directXCommon);
+		}
+		if (isDrawSprite == true) {
+			sprite->DrawCall(directXCommon);
+		}
 
 		//描画後処理
 		directXCommon->PostDraw();
@@ -177,11 +235,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ImGui::DestroyContext();
 #endif // DEBUG
 
-
+	audio->Finalize(soundData1);
 	directXCommon->Finalize();
 	winApp->Finalize();
 	
-	delete model;
+	delete model4;
+	delete model3;
+	delete model2;
+	delete model1;
 	delete sphere;
 	delete texture1;
 	delete texture2;

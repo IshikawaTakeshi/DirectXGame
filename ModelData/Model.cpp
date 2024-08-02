@@ -29,7 +29,8 @@ void Model::Initialize(DirectXCommon* dxCommon, Matrix4x4 cameraView,
 
 
 	//モデル読み込み
-	modelData_ = LoadObjFile(resourceDirectoryPath,modelDirectoryPath, filename);
+	modelData_ = LoadObjFile(resourceDirectoryPath, modelDirectoryPath, filename);
+	modelData_.objFilePath = filename; //ファイル名を格納
 
 	//======================= メッシュ初期化 ===========================//
 
@@ -93,10 +94,15 @@ void Model::Update() {
 	transformMatrixData_->WVP = worldViewProjectionMatrix_;
 	transformMatrixData_->World = worldMatrix_;
 
-	ImGui::Begin("Window:Model");
-	ImGui::DragFloat3("ModelScale", &transform_.scale.x, 0.01f);
-	ImGui::DragFloat3("ModelRotate", &transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("ModelTranslate", &transform_.translate.x, 0.01f);
+	ImGui::Begin("objModel");
+	if (ImGui::TreeNode(modelData_.objFilePath.c_str())) {
+		//ImGui::Text(modelData_.objFilePath.c_str());
+		ImGui::DragFloat3("ModelScale", &transform_.scale.x, 0.01f);
+		ImGui::DragFloat3("ModelRotate", &transform_.rotate.x, 0.01f);
+		ImGui::DragFloat3("ModelTranslate", &transform_.translate.x, 0.01f);
+		ImGui::TreePop();
+	}
+
 	ImGui::End();
 }
 
@@ -149,7 +155,7 @@ void Model::InitializeDirectionalLightData(DirectXCommon* dxCommon) {
 
 
 ModelData Model::LoadObjFile(const std::string& resourceDirectoryPath, const std::string& modelDirectoryPath, const std::string& filename) {
-	ModelData modelData; //構築するModelData
+	ModelData modelData; //構築するModelDat
 	std::vector<Vector4> positions; //位置
 	std::vector<Vector3> normals; //法線
 	std::vector<Vector2> texcoords; //テクスチャ座標
@@ -162,8 +168,13 @@ ModelData Model::LoadObjFile(const std::string& resourceDirectoryPath, const std
 		std::istringstream s(line);
 		s >> identifier; //先頭の識別子を読む
 
-		//頂点情報を読む
-		if (identifier == "v") { //"v" 頂点情報
+		//object名を読み込む
+		if (identifier == "o") { //"o" オブジェクト名
+			std::string objectName;
+			s >> objectName;
+			
+			//頂点情報を読む
+		} else if (identifier == "v") { //"v" 頂点情報
 
 			Vector4 position;
 			s >> position.x >> position.y >> position.z;

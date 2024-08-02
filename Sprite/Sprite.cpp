@@ -96,6 +96,8 @@ void Sprite::Update() {
 	//ImGuiの更新
 	ImGui::Begin("Sprite");
 	ImGui::DragFloat3("SpriteTranslate", &transform_.translate.x, 1.0f);
+	ImGui::DragFloat3("SpriteRotate", &transform_.rotate.x, 0.02f);
+	ImGui::DragFloat3("SpriteScale", &transform_.scale.x, 0.02f);
 	mesh_->GetMaterial()->UpdateImGui();
 	ImGui::End();
 	

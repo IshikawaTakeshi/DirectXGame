@@ -92,6 +92,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -119,6 +120,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Source\VertexResource.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Include\DirectionalLight.h" />
     <ClInclude Include="Include\DirectXShaderCompiler.h" />
     <ClInclude Include="Include\DirectXCommon.h" />

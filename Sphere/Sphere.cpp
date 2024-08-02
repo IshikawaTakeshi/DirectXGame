@@ -92,7 +92,6 @@ void Sphere::UpdateImGui() {
 	ImGui::DragFloat3("SphereScale", &transform_.scale.x, 0.01f);
 	ImGui::DragFloat3("SphereRotate", &transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("SphereTranslate", &transform_.translate.x, 0.01f);
-	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 	ImGuiComboUI();
 
 	ImGui::ColorEdit4("LightColor", &directionalLightData_->color_.x);
