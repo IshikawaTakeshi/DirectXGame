@@ -52,6 +52,17 @@ public:
 	/// </summary>
 	Transform GetTransform() { return transform_; }
 
+	const Vector2& GetPosition() const { return position_; }
+
+	const float GetRotation() const { return rotation_; }
+
+	const Vector2& GetSize() const { return size_; }
+
+	void SetPosition(const Vector2& position) { position_ = position; }
+
+	void SetRotation(const float rotation) { rotation_ = rotation; }
+
+	void SetSize(const Vector2& size) { size_ = size; }
 
 private:
 
@@ -65,6 +76,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 	//sprite用のTransformationMatrix用の頂点データ
 	TransformMatrix* wvpData_ = nullptr;
+
+	Vector2 position_ = { 0.0f,0.0f };
+	float rotation_ = 0.0f;
+	Vector2 size_ = { 160.0f,90.0f };
 
 	Transform transform_{};
 	Matrix4x4 worldMatrix_;

@@ -37,6 +37,10 @@ public: //ゲッター
 	/// </summary>
 	ID3D12Resource* GetMaterialResource() { return materialResource_.Get(); }
 
+	MaterialData* GetMaterialData() { return materialData_; }
+
+	const Vector4& GetColor() const { return materialData_->color; }
+
 	Texture* GetTexture() { return texture_; }
 
 public: //セッター
@@ -56,6 +60,7 @@ public: //セッター
 	/// </summary>
 	void SetTexture(Texture* texture) { texture_ = texture; }
 
+	void SetColor(const Vector4& color) { materialData_->color = color; }
 
 private:
 

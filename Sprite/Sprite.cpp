@@ -83,6 +83,10 @@ void Sprite::Initialize(SpriteCommon* spriteCommon, const std::string& textureFi
 #pragma region 更新処理
 void Sprite::Update(int num) {
 
+	transform_.translate = Vector3{ position_.x,position_.y,0.0f };
+	transform_.rotate = Vector3{ 0.0f,0.0f,rotation_ };
+	transform_.scale = Vector3{ size_.x,size_.y,1.0f };
+
 	//アフィン行列の更新
 	worldMatrix_ = MatrixMath::MakeAffineMatrix(
 		transform_.scale,
@@ -100,9 +104,9 @@ void Sprite::Update(int num) {
 	//ImGuiの更新
 	std::string windowName = "Sprite" + std::to_string(num);
 	ImGui::Begin(windowName.c_str());
-	ImGui::DragFloat3("SpriteTranslate", &transform_.translate.x, 1.0f);
-	ImGui::DragFloat3("SpriteRotate", &transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("SpriteScale", &transform_.scale.x, 0.01f);
+	ImGui::DragFloat2("SpriteTranslate", &position_.x,1);
+	ImGui::DragFloat("SpriteRotation", &rotation_, 0.01f);
+	ImGui::DragFloat2("SpriteScale", &size_.x, 1);
 	mesh_->GetMaterial()->UpdateMaterialImGui();
 	ImGui::End();
 	
