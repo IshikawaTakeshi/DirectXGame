@@ -1,5 +1,4 @@
 #include "ImGuiManager.h"
-
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "SrvManager.h"

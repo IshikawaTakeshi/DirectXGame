@@ -1,13 +1,6 @@
 #include "CameraManager.h"
 #include "Camera.h"
-
-#pragma region imgui
-#ifdef _DEBUG
-#include "externals/imgui/imgui.h"
-#include "externals/imgui/imgui_impl_dx12.h"
-#include "externals/imgui/imgui_impl_win32.h"
-#endif 
-#pragma endregion
+#include "ImGuiManager.h"
 
 CameraManager* CameraManager::instance_ = nullptr;
 

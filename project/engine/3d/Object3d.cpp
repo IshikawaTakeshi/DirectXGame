@@ -9,9 +9,11 @@
 #include "Camera.h"
 #include "CameraManager.h"
 #include "ImGuiManager.h"
+
 #include <fstream>
 #include <sstream>
 #include <cassert>
+
 
 Object3d::~Object3d() {
 	wvpResource_.Reset();

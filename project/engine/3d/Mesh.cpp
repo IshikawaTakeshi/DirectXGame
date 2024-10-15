@@ -168,7 +168,6 @@ void Mesh::InitializeVertexResourceObjModel(ID3D12Device* device, ModelData mode
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-
 void Mesh::InitializeIndexResourceSphere(ID3D12Device* device) {
 
 	// インデックスバッファのサイズを設定
