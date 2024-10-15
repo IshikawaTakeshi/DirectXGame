@@ -180,6 +180,6 @@ void Sprite::Draw() {
 	//IBVの設定
 	spriteCommon_->GetDirectXCommon()->GetCommandList()->IASetIndexBuffer(&mesh_->GetIndexBufferView());
 	// 描画！(DrawCall/ドローコール)。3頂点で1つのインスタンス。
-	spriteCommon_->GetDirectXCommon()->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+	spriteCommon_->GetDirectXCommon()->GetCommandList()->DrawIndexedInstanced(6, instanceCount_, 0, 0, 0);
 }
 #pragma endregion

@@ -136,4 +136,6 @@ private:
 
 	Vector2 textureLeftTop_ = { 0.0f,0.0f  }; //テクスチャの左上座標
 	Vector2 textureSize_ = { 100.0f,100.0f }; //テクスチャの切り出しサイズ
+
+	uint32_t instanceCount_ = 1;
 };

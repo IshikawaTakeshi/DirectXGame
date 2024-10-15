@@ -1,11 +1,12 @@
 #pragma once
 #include "ResourceDataStructure.h"
 #include "Material.h"
+#include "TransformMatrix.h"
 #include <string>
 #include <d3d12.h>
 #include <wrl.h>
 
-
+class SrvManager;
 class DirectXCommon;
 class Mesh {
 public:
@@ -47,15 +48,6 @@ public:
 	void InitializeVertexResourceObjModel(ID3D12Device* device,ModelData modelData);
 
 	/// <summary>
-	/// 頂点バッファビューの取得
-	/// </summary>
-	const D3D12_VERTEX_BUFFER_VIEW& GetVertexBufferView() const { return vertexBufferView_; }
-	ID3D12Resource* GetVertexResource() { return vertexResource_.Get(); }
-
-
-	//================================= IndexBufferResource ==================================//
-
-	/// <summary>
 	/// 球体のIndexResource初期化
 	/// </summary>
 	void InitializeIndexResourceSphere(ID3D12Device* device);
@@ -65,14 +57,18 @@ public:
 	/// </summary>
 	void InitializeIndexResourceSprite(ID3D12Device* device);
 
-	/// <summary>
-	/// インデックスバッファビューの取得
-	/// </summary>
-	const D3D12_INDEX_BUFFER_VIEW& GetIndexBufferView() { return indexBufferView_; }
+	//InstancingResource
+	void InitializeInstancingResource(ID3D12Device* device,uint32_t kNumInstance);
 
-	//================================= MaterialBufferResource ==================================//
+	/// 頂点バッファビューの取得
+	const D3D12_VERTEX_BUFFER_VIEW& GetVertexBufferView() const { return vertexBufferView_; }
+	ID3D12Resource* GetVertexResource() { return vertexResource_.Get(); }
 
+	/// マテリアルの取得
 	Material* GetMaterial() { return material_; }
+
+	/// インデックスバッファビューの取得
+	const D3D12_INDEX_BUFFER_VIEW& GetIndexBufferView() { return indexBufferView_; }
 
 public:
 
@@ -81,8 +77,12 @@ public:
 
 private:
 
+	
+
 	//マテリアル
 	Material* material_;
+
+	SrvManager* srvManager_ = nullptr;
 
 	//頂点バッファリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;
@@ -94,5 +94,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource_;
 	D3D12_INDEX_BUFFER_VIEW indexBufferView_{};
 
+	//インスタンシング用のリソース
+	Microsoft::WRL::ComPtr<ID3D12Resource> instancingResource_;
+	TransformMatrix* instancingData_ = nullptr;
 };
 

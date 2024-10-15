@@ -114,5 +114,5 @@ void Object3d::Draw() {
 }
 
 void Object3d::SetModel(const std::string& filePath) {
-		model_ = ModelManager::GetInstance()->FindModel(filePath);
+	model_ = ModelManager::GetInstance()->FindModel(filePath);
 }

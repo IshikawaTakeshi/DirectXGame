@@ -1,6 +1,8 @@
 #include "Mesh.h"
 #include "DirectXCommon.h"
 #include "TextureManager.h"
+#include "SrvManager.h"
+#include "MatrixMath.h"
 #include <numbers>
 
 Mesh::~Mesh() {
@@ -216,4 +218,19 @@ void Mesh::InitializeIndexResourceSprite(ID3D12Device* device) {
 	indexResource_->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 	indexData[0] = 0; indexData[1] = 1; indexData[2] = 2;
 	indexData[3] = 1; indexData[4] = 3; indexData[5] = 2;
+}
+
+void Mesh::InitializeInstancingResource(ID3D12Device* device, uint32_t kNumInstance) {
+	
+	// インスタンス用のリソースを作成
+	instancingResource_ = DirectXCommon::CreateBufferResource(device, sizeof(TransformMatrix) * kNumInstance);
+	//書きこむためのアドレスを取得
+	instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
+	//単位行列を書き込む
+	for (uint32_t index = 0; index < kNumInstance; ++index) {
+		instancingData_[index].WVP = MatrixMath::MakeIdentity4x4();
+		instancingData_[index].World = MatrixMath::MakeIdentity4x4();
+	}
+
+	srvManager_->CreateSRVForStructuredBuffer(kNumInstance, sizeof(TransformMatrix), instancingResource_.Get(),3);
 }

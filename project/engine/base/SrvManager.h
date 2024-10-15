@@ -36,7 +36,7 @@ public:
 	/// <summary>
 	/// SRV生成（Structured Buffer用）
 	/// </summary>
-	void CreateSRVforStructuredBuffer(UINT numElements, UINT stride, ID3D12Resource* pResource, uint32_t srvIndex);
+	void CreateSRVForStructuredBuffer(UINT numElements, UINT stride, ID3D12Resource* pResource, uint32_t srvIndex);
 
 	//テクスチャ確保可能チェック
 	bool CheckTextureAllocate();
