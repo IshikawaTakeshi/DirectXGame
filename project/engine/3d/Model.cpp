@@ -5,18 +5,13 @@
 #include "MatrixMath.h"
 #include "SrvManager.h"
 #include "TextureManager.h"
+#include "ImGuiManager.h"
 #include "ModelCommon.h"
+
+//標準ライブラリ
 #include <fstream>
 #include <sstream>
 #include <cassert>
-
-#pragma region imgui
-#ifdef _DEBUG
-#include "../externals/imgui/imgui.h"
-#include "../externals/imgui/imgui_impl_dx12.h"
-#include "../externals/imgui/imgui_impl_win32.h"
-#endif 
-#pragma endregion
 
 Model::~Model() {
 
